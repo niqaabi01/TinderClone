@@ -1,0 +1,11 @@
+Hey guys
+feel free to type something its a text file
+So thats how well type try using the terminal
+can you copy this into the tinderclone
+
+using cp -r 
+copy what?
+
+ter copy this file Brainstorming.txt 
+
+

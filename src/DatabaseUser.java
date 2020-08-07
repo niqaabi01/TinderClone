@@ -32,7 +32,7 @@ public class DatabaseUser
             System.out.println("Error: " + e.toString());
         }
 
-        //System.out.println("Number of Profiles in the file: " +i);
+        // System.out.println("Number of Profiles in the file: " +i);
         return i;
     }
 
@@ -75,15 +75,6 @@ public class DatabaseUser
                     image = new Images( data[5].trim(), data[6].trim(), data[7].trim(),tags);
                     Profile profile = new Profile(person, image);
 
-                    if(data[2].trim().equals("Male")) {
-                        this.numberOfFemales++;
-                    }
-                    if(data[2].trim().equals("Female")) {
-                        this.numberOfMales++;
-                    }
-                    if(data[2].trim().equals("Non-Binary")) {
-                        this.numberOfNON_Binary_Individuals++;
-                    }
                     this.profile[i-1] = profile;
                 }
                 i++;
@@ -100,15 +91,15 @@ public class DatabaseUser
     }
     
 
-    private static void TinderSwipeSave(Profile profile) throws IOException {
+    public void TinderSwipeSave(Profile profile) throws IOException {
         try{
-        File file =new File("Matches.txt");
+        File file =new File("Matches.csv");
         //  creates new files
         file.createNewFile();
         // creates a file write object without overiding previously stored data
         Writer writer = new FileWriter(file, true);
-
-        writer.write(profile.getPerson()+"\n");
+        writer.write("\n");
+        writer.write(profile+"\n");
         
         writer.flush();
         writer.close();

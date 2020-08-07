@@ -17,4 +17,13 @@ public class Profile
     {
         return this.image;
     }
+   
+    public String toString() {
+        return person+"\n"+image;
+    }
 }
+
+
+// Mike, 25, Male, PE, Hi guys, imagePath,cool guy, living good life, self love, food lover 
+// Gale, 26, Non-Binary, KZN, Hey guys, imagePath, cool being, happy vibes, Gods fave, happyChild
+// Mbali, 24, Female, JHB, Hala, imagePath, cool kid, Skr skr, goals, happy lif

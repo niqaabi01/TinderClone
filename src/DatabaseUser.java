@@ -4,13 +4,14 @@ import java.util.*;
 public class DatabaseUser
 {
     //attributes
-    private String filePathToCSV = "C:\\Users\\saani\\Documents\\Tinder\\users.csv";//users.csv
+    private String filePathToCSV = "C:\\Users\\saani\\Documents\\Tinder\\bin\\users.csv";//users.csv
     private Images image;
     private Person person;
     private int numberOfFemales, numberOfMales, numberOfNON_Binary_Individuals;
     private Profile[] profile;
 
-    //constructor
+    //constructor   
+    
     DatabaseUser() {}
 
     public int countLinesInCSV(String filename)
@@ -31,7 +32,7 @@ public class DatabaseUser
             System.out.println("Error: " + e.toString());
         }
 
-        System.out.println("Number of Profiles in the file: " + (i+1));
+        //System.out.println("Number of Profiles in the file: " +i);
         return i;
     }
 
@@ -45,7 +46,7 @@ public class DatabaseUser
     //     System.out.print(" ]");
     // }
     //methods
-    public void getProfileArray()
+    public Profile[] getProfileArray()
     {
         /**
          * read data from csv
@@ -53,7 +54,7 @@ public class DatabaseUser
          * create image object using first last remaining columns
          * add the person and image created to a
          */
-
+        
         try
         {
             BufferedReader csvReader = new BufferedReader(new FileReader(filePathToCSV));
@@ -62,19 +63,16 @@ public class DatabaseUser
             this.profile = new Profile[countLinesInCSV(filePathToCSV)-1];
             while((row = csvReader.readLine()) != null)
             {
-                System.out.println(row);
                 if(i > 0)
                 {
                     String[] data = row.split(",");
                     person = new Person(data[0].trim(),Integer.parseInt( data[1].trim()), data[2].trim(), data[3].trim(), data[4].trim());
-                    System.out.println(person);
                     ArrayList<String> tags = new ArrayList<String>();
                     tags.add(data[8].trim());
-                    tags.add(data[9].trim());
+                    tags.add(data[9].trim()  );
                     tags.add(data[10].trim());
                     
                     image = new Images( data[5].trim(), data[6].trim(), data[7].trim(),tags);
-                    System.out.println(image);
                     Profile profile = new Profile(person, image);
 
                     if(data[2].trim().equals("Male")) {
@@ -97,35 +95,27 @@ public class DatabaseUser
         catch(Exception e) {
             System.out.println("Error: " + e.toString());
         }
+        return this.profile;
+
     }
+    
 
-    // public Driver[] getArrayByVehicleType(String vehicleType) {
+    private static void TinderSwipeSave(Profile profile) throws IOException {
+        try{
+        File file =new File("Matches.txt");
+        //  creates new files
+        file.createNewFile();
+        // creates a file write object without overiding previously stored data
+        Writer writer = new FileWriter(file, true);
 
-    //     Driver[] Xdrivers = new Driver[this.numberOfX];
-    //     Driver[] XLdrivers = new Driver[this.numberOfXL];
-
-    //     int xindex = 0;
-    //     int xlindex = 0;
-    //     for(int i=0; i<this.drivers.length; i++) {
-    //         if(this.drivers[i].getCar().getVehicleType().equals("X")) {
-    //             Xdrivers[xindex] = this.drivers[i];
-    //             xindex++;
-    //         }
-    //         if(this.drivers[i].getCar().getVehicleType().equals("XL")) {
-    //             XLdrivers[xlindex] = this.drivers[i];
-    //             xlindex++;
-    //         }
-    //     }
-
-    //     if(vehicleType.equals("X")) {
-    //         return Xdrivers;
-    //     }
-
-    //     return XLdrivers;
-
-    //     // Driver[] drivers = 
-
-
-    //     // for
-    // }
+        writer.write(profile.getPerson()+"\n");
+        
+        writer.flush();
+        writer.close();
+        
+    }catch (IOException e) {
+        System.out.println("Error");
+        e.printStackTrace();
+    }
+}
 }

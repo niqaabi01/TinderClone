@@ -3,8 +3,8 @@ import java.util.*;
 
 public class DatabaseUser
 {
-    //attributes
-    private String filePathToCSV = "C:\\Users\\saani\\Documents\\Tinder\\bin\\users.csv";//users.csv
+    //attributes                             C:\Users\saani\Documents\Tinder\bin\users2
+    private String filePathToCSV = "C:\\Users\\saani\\Documents\\Tinder\\bin\\users2.csv";//users.csv
     private Images image;
     private Person person;
     private int numberOfFemales, numberOfMales, numberOfNON_Binary_Individuals;
@@ -91,7 +91,7 @@ public class DatabaseUser
     }
     
 
-    public void TinderSwipeSave(Profile profile) throws IOException {
+    public void TinderSwipeSave(Profile filteredProfiles) throws IOException {
         try{
         File file =new File("Matches.csv");
         //  creates new files
@@ -99,7 +99,7 @@ public class DatabaseUser
         // creates a file write object without overiding previously stored data
         Writer writer = new FileWriter(file, true);
         writer.write("\n");
-        writer.write(profile+"\n");
+        writer.write(filteredProfiles+"\n");
         
         writer.flush();
         writer.close();

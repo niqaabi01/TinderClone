@@ -5,104 +5,122 @@ import java.util.Scanner;
 
 
 
-public class TinderApp {
+public class TinderApp
+{
 	private static DatabaseUser dataObj = new DatabaseUser();
 	private static Profile[] allProfile = dataObj.getProfileArray();
-	private static Profile[] filteredProfiles = new Profile[7];
-
+	private static ArrayList<Profile> filteredProfiles = new ArrayList<>();
+	
 	private static Scanner input = new Scanner(System.in);
 
-	public static void main(String[] args) throws IOException {
-
-		String userPreferrence;// variable to store user preferrence
-		System.out.println("Are you interested in Male(M) or Female(F) or NonBinary(NB)");
-		userPreferrence = input.nextLine().toUpperCase();// get user preferrence
-		filterProfiles(userPreferrence);
-
-		// String swipeOption = "";
+	public static void main(String[] args) throws IOException
+	{
+		String userPreference;// variable to store user preference
+		System.out.println("Are you interested in Male(M) or Female(F) or Non-Binary(NB)");
+		userPreference = input.nextLine().toUpperCase();// get user preference
+		
+		filterProfiles(userPreference);  
+		
 		int index = 0;
-		System.out.println(filteredProfiles[index]);// print the very first profile
-
-		// Traverse through the list of filtered profiles
 		String swipeOption = "";
-		// while (swipeOption != null) {
-		// processUserSwipes(swipeOption, index);
-		// String option =input.nextLine();
-		// }
-		boolean Flag = true;
-		while (Flag == true) {
-			System.out.println("Swipe Left(L) or Right(R) or Exit(Q)");
-			swipeOption = input.nextLine().toUpperCase();// get user swipeOption
+		System.out.println(filteredProfiles.get(index));// print the very first profile
 
-			if (swipeOption.equals("L")) {
-				index++;
-				System.out.println(filteredProfiles[index]);// print out the next profile
-			} else if (swipeOption.equals("R")) {
-				dataObj.TinderSwipeSave(filteredProfiles[index]);
+		//Traverse through the list of all the profiles
+
+		while(true)
+		{
+            System.out.println("Swipe Left(L) or Right(R) or Exit(Q)");
+			swipeOption = input.nextLine().toUpperCase();//get user swipeOption
+		
+			if(swipeOption.equals("L"))
+			{
+				if(index < (filteredProfiles.size()-1)){
+					index++;
+					System.out.println(filteredProfiles.get(index));//display the next profile
+				}
+				else if(index == (filteredProfiles.size()-1)){
+					System.out.println( "OH no!!!"+ " \n"+"No More matches available ");
+					break;
+				}
+				
+			}
+			else if(swipeOption.equals("R"))
+			{
+				dataObj.TinderSwipeSave(filteredProfiles.get(index));
 				System.out.println("Profile saved");
+				if(index < (filteredProfiles.size()-1)){
+					index++;
+					System.out.println(filteredProfiles.get(index));//display the next profile
+				}
+				else if(index == (filteredProfiles.size()-1)){
+					System.out.println( "OH no!!!"+ " \n"+"No More matches available ");
+					System.out.println("Maybe your love is waiting on you to broaden your search.......");
+					break;
+				}
 
-				System.out.println("");
-				System.out.println("Viewing Next Profile...........");
-				index++;
-				System.out.println(filteredProfiles[index]);// print out the next profile
-				// System.out.println("Swipe Left(L) or Right(R) or Exit(Q)");
-				// swipeOption = input.nextLine().toUpperCase();//get user swipeOption
-			} else if (swipeOption.equals("Q")) {
-				Flag = false;
-				System.out.println("Thank you for using TinderClone" + "\n" + "Good Bye");
+			}
+			else if(swipeOption.equals("Q"))
+			{
+				System.out.println("Thank you for using TinderClone"+"\nGood Bye");
 				break;
 			}
-		}
+        }
 	}
-
-	static void filterProfiles(String userPreferrence) {
-		switch (userPreferrence) {
+	/**
+	 * This method filters the profiles based on the gender preference of the user
+	 * @param userPreference
+	 */
+	static void filterProfiles(String userPreference)
+	{
+		switch (userPreference)
+		{
 			case "F":
 				//Keep ladies only
 				int j = 0;
-				for (int i = 0; i < allProfile.length; i++) {
-					if (allProfile[i].getPerson().getGender().equals("Female")) {
-						filteredProfiles[j] = allProfile[i];
+				for(int i = 0; i < allProfile.length; i++)
+				{
+					if(allProfile[i].getPerson().getGender().equals("Female"))
+					{
+						filteredProfiles.add(allProfile[i]);
 						j++;
-						break;
 					}
 				}
+				break;
 			case "M":
 				// Keep only guys
 				int p = 0;
-				for (int i = 0; i < allProfile.length; i++) {
-					if (allProfile[i].getPerson().getGender().equals("Male")) {
-						filteredProfiles[p] = allProfile[i];
-
+				for(int i = 0; i < allProfile.length; i++)
+				{
+					if(allProfile[i].getPerson().getGender().equals("Male"))
+					{
+						filteredProfiles.add(allProfile[i]);
 						p++;
-						break;
 					}
 				}
+				break;
 			case "NB":
 				// Keep the list as is
 				for (int i = 0; i < allProfile.length; i++)
-					filteredProfiles[i] = allProfile[i];
-					break;
+					filteredProfiles.add(allProfile[i]);
+				break;
 		}
+//		switch (userPreference)
+//		{
+//			case "F":
+//				//Keep ladies only
+//				filteredProfiles = dataObj.getFemales();
+//				break;
+//			case "M":
+//				// Keep only guys
+//				filteredProfiles = dataObj.getMales();
+//				break;
+//			case "NB":
+//				// Keep the list as is
+//				filteredProfiles = allProfile;
+//				break;
+//		}
 	}
-
-	// static void processUserSwipes(String swipeOption, int index) throws IOException
-	// {
-	// 	System.out.println("Swipe Left(L) or Right(R) or Exit(Q)");
-	// 	swipeOption = input.nextLine().toUpperCase();//get user swipeOption
-		
-	// 	if(swipeOption.equals("L"))
-	// 	{
-	// 		index++;
-	// 		System.out.println(filteredProfiles[index].getPerson());//print out the next profile
-	// 	}
-	// 	else if(swipeOption.equals("R"))
-	// 	{
-	// 		dataObj.TinderSwipeSave(filteredProfiles[index]);
-	// 		System.out.println("Profile saved");
-	// 		System.out.println("Would you like to continue");
-	// 		swipeOption = input.nextLine().toUpperCase();//get user swipeOption
-    //     }
-    //     else if(swipeOption.equals("Q"))//
-	// }
 }
+
+
+

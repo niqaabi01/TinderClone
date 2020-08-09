@@ -20,13 +20,13 @@ vpath %.class $(BINDIR)
 .java.class:
 	$(JAVAC) $(JFLAGS) $<
 
-classes: DatabaseUser.class  Images.class  Person.class  Profile.class  TinderApp.class
+classes: DatabaseUser.class  Images.class  Person.class  Profile.class  TinderApp.class 
 default: $(CLASSES)
 
 doc:
 	javadoc -d $(DOCDIR) -cp $(DOCDIR) $(SRCDIR)/*.java
 
-test_classes: DatabaseUser.class  Images.class  Person.class  Profile.class  TinderApp.class
+test_classes: DatabaseUser.class  Images.class  Person.class  Profile.class  TinderApp.class 
 	      
 junit: test_classes
 	
@@ -44,6 +44,7 @@ Profile.class: Profile.java
 
 TinderApp.class: TinderApp.java
 	javac -d $(BINDIR) -cp  $(JUNIT)
+
 
 
 clean:
